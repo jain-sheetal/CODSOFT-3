@@ -1,0 +1,45 @@
+import random
+import string
+
+def generate_password(length):
+    if length < 4:
+        print("Password length must be at least 4 for better security!")
+        return None
+
+    # Define character pools
+    lower = string.ascii_lowercase  # 'abcdefghijklmnopqrstuvwxyz'
+    upper = string.ascii_uppercase  # 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    digits = string.digits          # '0123456789'
+    special = string.punctuation    # '!@#$%^&*()_+-=[]{}|;:,.<>?'
+
+    # Ensure the password includes at least one character from each category
+    password = [
+        random.choice(lower),
+        random.choice(upper),
+        random.choice(digits),
+        random.choice(special)
+    ]
+
+    # Fill the rest of the password length with random characters from all pools
+    all_characters = lower + upper + digits + special
+    password += random.choices(all_characters, k=length - 4)
+
+    # Shuffle the password to make it random
+    random.shuffle(password)
+
+    # Return the password as a string
+    return ''.join(password)
+
+def main():
+    print("Password Generator")
+    try:
+        # Prompt the user for the desired password length
+        length = int(input("Enter the desired password length (minimum 4): "))
+        password = generate_password(length)
+        if password:
+            print(f"Generated Password: {password}")
+    except ValueError:
+        print("Error: Please enter a valid number for the length.")
+
+if __name__ == "__main__":
+    main()
